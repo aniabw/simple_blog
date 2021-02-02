@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+<div class="container">
+          <div class="row">
+            {% block content %}
+
+                <h2>{{ post.title }}</h2>
+                <small>Posted at {{ post.created_at }}</small>
+                <p><strong>{{ post.headline }}</strong></p>
+                <p>{{ post.body }}</p>
+
+                <br />
+                <h4>Comments:</h4>
+                <hr />
+                {% for comment in post.comments.all %}
+                    <strong>{{ comment.name }}</strong>
+                    <small>{{ comment.created_at }}</small>
+                    <br />
+                    {{ comment.body }}
+                    <br /><br />
+                {% empty %}
+                    No comments yet, be first!
+                {% endfor %}
+
+                <hr />
+
+                <form method="post" action="">
+                  {% csrf_token %}
+
+                  {{ form.as_p }}
+
+                  <button>Submit</button>
+
+                </form>
+
+            {% endblock %}
+
+        </div>
+</div>
